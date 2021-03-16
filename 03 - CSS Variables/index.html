@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <title>Scoped CSS Variables and JS</title>
   </head>
-  <body>
+  <body class="dark">
+    Theme
+    <input type="checkbox" name="theme" id="theme" />
     <h2>Update CSS Variables with <span class="hl">JS</span></h2>
 
     <div class="controls">
@@ -42,6 +44,10 @@
         --blur: 0px;
         --spacing: 10px;
       }
+      #theme {
+        width: 30px;
+        height: 30px;
+      }
       img {
         padding: var(--spacing);
         background: var(--base);
@@ -50,13 +56,22 @@
       .hl {
         color: var(--base);
       }
+      .dark {
+        --color: #133750;
+        --text: #e3fffd;
+      }
+      .light {
+        --color: #e3fffd;
+        --text: #133750;
+      }
       body {
         text-align: center;
-        background: #193549;
-        color: white;
+        background: var(--color);
+        color: var(--text);
         font-family: "helvetica neue", sans-serif;
         font-weight: 100;
         font-size: 50px;
+        transition: background-color 0.6s ease, color 1s ease;
       }
 
       .controls {
@@ -70,6 +85,7 @@
 
     <script>
       const inputs = document.querySelectorAll(".controls input");
+      const checkBox = document.getElementById("theme");
       function handleUpdate() {
         const suffix = this.dataset.sizing || "";
         document.documentElement.style.setProperty(
@@ -78,6 +94,9 @@
         );
       }
       inputs.forEach((input) => input.addEventListener("input", handleUpdate));
+      checkBox.addEventListener("change", (e) => {
+        document.body.classList.toggle("light");
+      });
     </script>
   </body>
 </html>
